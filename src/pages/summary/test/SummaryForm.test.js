@@ -1,7 +1,9 @@
-import { render, fireEvent, screen, logRoles } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import SummaryForm from "../SummaryForm";
+import userEvent from "@testing-library/user-event";
 
 test("Test Summary form", async () => {
+    const user = userEvent.setup();
     render(<SummaryForm />);
 
     const confirmButton = screen.getByRole("button", { name: "Confirm order" });
@@ -14,12 +16,22 @@ test("Test Summary form", async () => {
     expect(checkbox).not.toBeChecked();
 
     // Checkbox checked should unblock button
-    fireEvent.click(checkbox);
+    await user.click(checkbox);
     expect(checkbox).toBeChecked();
     expect(confirmButton).toBeEnabled();
 
     // Un-checking disables button
-    fireEvent.click(checkbox);
+    await user.click(checkbox);
     expect(checkbox).not.toBeChecked();
     expect(confirmButton).toBeDisabled();
+});
+
+test("Popover response to hover", async () => {
+    const user = userEvent.setup();
+
+    // Popover is hidden initially
+
+    // Popover appears on mouseover of checkbox label
+
+    // Popover disappears on mouseout
 });
