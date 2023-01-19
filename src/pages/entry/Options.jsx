@@ -15,10 +15,17 @@ export default function Options({ optionType }) {
 
     // optionType is 'scoops' or 'toppings
     useEffect(() => {
+        const abortController = new AbortController();
         axios
-            .get(`http://localhost:3030/${optionType}`)
+            .get(`http://localhost:3030/${optionType}`, {
+                signal: abortController.signal,
+            })
             .then((response) => setItems(response.data))
             .catch((error) => setError(true));
+
+        return () => {
+            abortController.abort();
+        };
     }, [optionType]);
 
     if (error) {
