@@ -23,9 +23,9 @@ export default function Options({ optionType }) {
             .then((response) => setItems(response.data))
             .catch((error) => setError(true));
 
-        return () => {
-            abortController.abort();
-        };
+        // return () => {
+        //     abortController.abort();
+        // };
     }, [optionType]);
 
     if (error) {
